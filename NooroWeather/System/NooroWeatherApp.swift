@@ -9,9 +9,11 @@ import SwiftUI
 
 @main
 struct NooroWeatherApp: App {
+    private let environment = AppEnvironment.bootstrap()
+
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            ContentView(viewModel: ContentView.ViewModel(container: environment.diContainer))
         }
     }
 }
