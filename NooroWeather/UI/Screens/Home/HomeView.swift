@@ -10,6 +10,7 @@ import SwiftUI
 struct HomeView: View {
     @State private(set) var viewModel: HomeViewModel
     @Environment(\.isPreview) var isPreview
+    @Environment(\.scenePhase) var scenePhase
 
     var body: some View {
         VStack {
@@ -56,8 +57,8 @@ struct HomeView: View {
         }
         .padding(.horizontal)
         .ignoresSafeArea(edges: .bottom)
-        .onAppear {
-            if !isPreview {
+        .onChange(of: scenePhase) { _, newPhase in
+            if !isPreview, newPhase == .active {
                 Task { await viewModel.fetchSavedCityWeather() }
             }
         }
